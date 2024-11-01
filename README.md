@@ -28,7 +28,7 @@ The original repository activity seems quite low, and unfortunately, the bugs ha
 Please install the main branch
 
 ```R
-remotes::install_github("zqfang/MuDataSeurat")
+remotes::install_github("hungms/MuDataSeurat", dependencies = F)
 ```
 
 ## Usage
