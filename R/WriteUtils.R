@@ -152,6 +152,12 @@ write_data_frame <- function(parent, key, attr_df) {
         warning("Skip meta.data column: ", col, ", because of all values are NA.")
         next
       }
+      
+      # Check if the column is numeric and can be safely converted to integers
+      if (is.numeric(attr_df[[col]]) && all(attr_df[[col]] == as.integer(attr_df[[col]]), na.rm = TRUE)) {
+          attr_df[[col]] <- as.integer(attr_df[[col]])
+      }
+      
       # debug: remove "/" in key, it's not allow 
       col2 = gsub("/", "", col)
       write_matrix(grp, col2, attr_df[[col]])
