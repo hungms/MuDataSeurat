@@ -51,6 +51,9 @@ write_dataset <- function(parent, key, obj, scalar=FALSE) {
       dtype <- H5T_STRING$new(type="c", size=Inf)
       dtype$set_cset("UTF-8")
     }
+    else if (is.numeric(value)) {
+        dtype <- H5T_NATIVE_INTEGER
+    }
     if (scalar) {
         space <- H5S$new("scalar")
     }
