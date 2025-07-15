@@ -1,0 +1,66 @@
+---
+title: "Get Started with MuDataSeurat"
+vignette: >
+  %\VignetteIndexEntry{MuDataSeurat tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+author: "`r 'Author: Matthew Hung'`"
+date: "`r paste('Last Updated:', format(Sys.Date(), '%Y/%m/%d'))`"
+output:
+  html_document:
+    code_folding: hide
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+## Load the package
+```{r}
+library(Seurat)
+library(SeuratData)
+library(MuDataSeurat)
+```
+
+## Get example data
+```{r}
+data("pbmc3k")
+pbmc3k <- UpdateSeuratObject(pbmc3k)
+pbmc3k
+```
+
+## Process data
+```{r}
+pbmc3k <- NormalizeData(pbmc3k)
+pbmc3k <- FindVariableFeatures(pbmc3k)
+pbmc3k <- ScaleData(pbmc3k)
+pbmc3k <- RunPCA(pbmc3k)
+pbmc3k <- RunUMAP(pbmc3k, dims = 1:10)
+pbmc3k <- FindNeighbors(pbmc3k, dims = 1:10)
+pbmc3k <- FindClusters(pbmc3k, resolution = 0.5)
+```
+
+## Inspect Seurat structure
+```{r}
+names(pbmc3k@assays)
+names(pbmc3k@reductions)
+names(pbmc3k@graphs)
+```
+
+## Convert to H5AD
+```{r}
+SeuratToH5AD(pbmc3k, h5ad = "tests/pbmc3k.h5ad", umap = "umap", pca = "pca", snn = "RNA_snn", nn = "RNA_nn", assay = "RNA", adt = NULL)
+```
+
+## Read H5AD
+```{r}
+pbmc3k <- ReadH5AD("tests/pbmc3k.h5ad")
+pbmc3k
+```
+
+## Read H5MU
+```{python}
+import anndata as ad
+adata = ad.read_h5ad("/Users/hungm/The Francis Crick Dropbox/CaladoD/Matthew/github-repos/r-packages/MuDataSeurat/tests/pbmc3k.h5ad")
+adata
+```
