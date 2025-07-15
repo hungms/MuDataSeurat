@@ -45,11 +45,12 @@ pbmc3k <- FindClusters(pbmc3k, resolution = 0.5)
 names(pbmc3k@assays)
 names(pbmc3k@reductions)
 names(pbmc3k@graphs)
+pbmc3k@reductions["phate"] <- pbmc3k@reductions["pca"]
 ```
 
 ## Convert to H5AD
 ```{r}
-SeuratToH5AD(pbmc3k, h5ad = "tests/pbmc3k.h5ad", umap = "umap", pca = "pca", snn = "RNA_snn", nn = "RNA_nn", assay = "RNA", adt = NULL)
+SeuratToH5AD(pbmc3k, assay = "RNA", adt_name = NULL, umap = "umap", h5ad = "tests/pbmc3k.h5ad", reductions = c("pca", "phate"), snn = "RNA_snn", nn = "RNA_nn")
 ```
 
 ## Read H5AD

@@ -6,32 +6,34 @@
 \usage{
 SeuratToH5AD(
   obj,
-  h5ad,
-  columns = NULL,
-  umap = "umap",
-  pca = "pca",
-  snn = "snn",
-  nn = "nn",
   assay = "RNA",
-  adt = NULL
+  h5ad,
+  umap,
+  adt_name = NULL,
+  columns = NULL,
+  reductions = NULL,
+  snn = NULL,
+  nn = NULL
 )
 }
 \arguments{
 \item{obj}{Seurat object}
 
-\item{h5ad}{path for output .h5ad file}
+\item{assay}{assay name for gene expression. Defaults to "RNA"}
 
-\item{columns}{a vector of metadata columns to keep. Defaults to NULL to keep all columns}
+\item{h5ad}{path for output .h5ad file}
 
 \item{umap}{reduction name for X_umap. Defaults to "umap"}
 
+\item{adt_name}{assay name for adt_name counts if any}
+
+\item{columns}{a vector of metadata columns to keep. Defaults to NULL to keep all columns}
+
+\item{snn}{graph name for SNN. Defaults to "RNA_snn"}
+
+\item{nn}{graph name for NN. Defaults to "RNA_nn"}
+
 \item{pca}{reduction name for X_pca. Defaults to "pca"}
-
-\item{assay}{assay name for gene expression. Defaults to "RNA"}
-
-\item{adt}{assay name for ADT counts if any}
-
-\item{return_genes}{if TRUE, return genes from assays named c("CC", "BCR", "TCR", "MHC") to current assay. Defaults to TRUE}
 }
 \description{
 Convert Seurat to AnnData with SeuratDisk::Convert()
