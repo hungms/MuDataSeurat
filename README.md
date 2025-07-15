@@ -16,24 +16,20 @@ Please install the main branch
 remotes::install_github("hungms/MuDataSeurat", dependencies = F)
 ```
 
-## Usage
-### 
+## Example Usage
 
+### Convert Seurat to H5AD
+`MuDataSeurat::SeuratToH5AD()` allows you to convert Seurat object with multiple reductions and/or have ADT expression data.  
 
-### Export to H5AD, H5MU
+An input is required for the `umap` argument for successful conversion.  
 
-MuDataSeurat only export 3 layers: `count`, `data`, `scale.data`
-
-Therefore, You need `JoinLayers` for each modality first with seurat v5.
+`umap`, `reductions`, `snn`, `nn`, arguments allow you specify which reductions and nearest-neighbour graphs to keep.  
 
 ```R
-library(tidyverse)
-library(MuDataSeurat)
-SeuratToH5AD(seuratobj, h5ad = "tests/seuratobj.h5ad", umap = "umap", pca = "pca", snn = "RNA_snn", nn = "RNA_nn", assay = "RNA", adt = NULL)
+MuDataSeurat::SeuratToH5AD(seuratobj, assay = "RNA", umap = "umap", h5ad = "tests/seuratobj.h5ad", adt_name = "ADT", columns = NULL, reductions = c("pca", "phate"), snn = "RNA_snn", nn = "RNA_nn")
 ```
 
 ### Read H5AD to Seurat
-
 ```R
 ReadH5AD()
 ReadH5MU()
